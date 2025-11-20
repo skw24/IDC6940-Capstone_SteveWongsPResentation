@@ -1,0 +1,496 @@
+---
+title: "Logistic Regression on a basic dataset"
+author: "sw"
+format: html
+editor: visual
+execute:
+ echo: false
+embed-resources: true
+---
+
+**Introduction**
+
+Logistic regression analysis is a type of regression model that is used when a dataset’s response variable is categorical in nature. When the response variable takes on two distinct outcome classes, a binary logistic regression model is used, and when there are more than two classes of the response variable, either a multinomial or ordinal logistic regression model can be deployed (cite text book). Logistic regression is commonly used across a variety of industries to glean insights about data and make better decisions; such fields include medicine, traffic and road engineering, environmental concerns, credit and fraud issues, and more. In this literature review, we take a closer look at logistic regression by discussing some applications of the logistic regression algorithm in various machine learning models, as well as several uses of logistic regression modeling in several peer- reviewed studies.
+
+Many machine learning algorithms use logistic regression to train a model and make predictions about class labels. The article “…” investigates similarities between a logistic regression algorithm with gradient descent and a perceptron algorithm. Researchers observed that with very large steps, the logistic regression with gradient descent acts like a perceptron, which in some sense links it back to the Deep Equilibrium networks study. The conclusions from this paper are counter intuitive, and further research and reflections about classification and optimization theory are encouraged (citation).  
+
+Another way LR is used in machine learning is through large language models (LLMs), which are complex neural networks trained on very large datasets to output human language (find source to cite). The paper “Large Language Model” addresses the problem of estimating the confidence of LLM outputs when only black-box (query-only) access is available. It is a simple technique that uses Logistic Regression to classify and validate the confidence of the outputs. Some problems of using black-box models are that there is no control over the model itself, and in some cases, the benefits and the value of buying these services that provide a black-box model outweigh training a personal, custom model. Therefore, this is a framework that attempts to overcome these challenges (Pedapati)
+
+This article incorporates multinomial logistic regression in a machine learning model to classify text and improve natural language processing tasks (Shanbhag).
+
+**LR in the medical field**
+
+The article “Understanding Logistic Regression Analysis” discusses the usefulness of logistic regression, describes how to interpret results of the model, and gives an example of a logistic regression analysis using a synthetic dataset. The data is about patients undergoing a drug treatment with a categorical outcome variable that is binary in nature, taking on values of survived (1), or did not survive (0). The result of the analysis explains how to interpret output from the model; one must take the exponentials of the slopes in the model to find the chances (the probability) of an event occurring. It is noted that in order to correctly understand results of a logistic regression, one must carefully consider the differences between the odds ratio, the log odds, and the probabilities of events occurring. Another important point in the article states the importance of feature selection; a common way that predictors are selected for a logistic regression model is through a preliminary univariate analysis. During data preprocessing, all predictors are analyzed individually in relation to the outcome variable in a univariate analysis, and all significant predictors are used in the multivariate logistic regression analysis (cite source).
+
+The article, “Determinants of coexistence of undernutrition and anemia among under- five children in Rwanda; evidence from 2019/20 demographic health survey: Application of bivariate binary logistic regression model” details a bivariate binary logistic regression model. There are two outcome variables: anemia and undernutrition in children under five years of age in Rwanda. The study analyzes the relationship between the two outcome variables, as well as the relationship between 26 predictors relating to the childrens’ preexisting health conditions, family information, details about the parents, and relevant geographic information. One result of the study was that the relationship between the two outcome variables, presence of malnutrition and presence of anemia, was found to be significant. It was also found that six predictors were found to be significant: mother’s age, drinking water, other children in household, child gender, birth order, and gender of head of household. The conclusion states that improving maternal education, supplementing with vitamin A and other nutrient dense foods, providing a healthy home environment environment, and decreasing maternal anemia may help improve rates of malnutrition and anemia in children.
+
+In this study, “Predictors of hospital admission when presenting with acute on chronic breathlessness: Binary logistic regression” emergency room data from one hospital is analyzed to determine common predictors of patients that are admitted to the hospital. Specifically, patients presenting to the emergency room with acute on chronic breathlessness were surveyed to collect data that would help researchers understand common factors among those admitted to the hospital. Knowing common predictors ahead of time helps hospital staff more easily identify pateints who are more at risk for being admitted to the hospital, and also helps identify which patients would be more likely to be able to be discharged without being admitted. A binary logistic regression analysis of the data revealed that the odds of admission to the hospital were positively correlated with age, talking to a doctor about symptoms, and the presence of preexisting heart conditions; however, the odds of being admitted to the hospital were negatively associated with blood oxygen levels.
+
+A new medical condition was recently recognized in 2004: airplane headache (AH), a condition described as a headache induced while while taking off or landing in an airplane. Because AH is a relatively new addition to medical dictionaries, it is an underexplored condition that requires additional research. This study saught to identify common risk factors significantly associated with airplane headache to aid both travelers and airline employees. Two binary logistic regression models were constructed to compare two groups against the airplane headache group. The first binary logistic regression compared the airplane headache group to the no headache group, and 10 significant predictors of AH were identified; this model’s predictive power was found to be very high. The second binary logistic regression model compared the airplane headache group to a group labelled “other headache” (individuals with symptoms of other types of headaches). The result from this analysis showed four significant predictors; however, the predictive power of the model was shown to be very low. To conclude, it can be stated that binary logistic regression is a very effective way to find strong predictors of airplane headache when compared to those who do not have any headaches while flying (Prottengeier).
+
+One other useful way logistic regression is applied in the medical field is in identifying how the general public makes decisions regarding their health. Researchers in China analyzed 2696 health survey responses collected from individuals across 31 different Chinese provinces. They analyzed the data with a binary logistic regression model to classify points into two categories: unilateral decision making (value of 1), or collaborative decision making (value of 0); the researchers wanted to identify top predictors of individuals that make medical decisions by themselves and which predictors are correlated with patients making health decisions with more than one party (i.e. a patients, doctor, and family member all helping to make the health decision). It was found that most responses were classified as collaborative decision making (70%), which supports the idea that individuals in China strongly value family- made decisions and strong family values. It was also concluded that
+
+significant predictors of unilateral decision making were gender, education level, family status, religious beliefs and occupation (Liu J. 2024).
+
+Logistic Regression is also useful in detecting common diseases, such as breast cancer. “this study” uses regularized logistic regression along with biological network information and pairwise interactions, to find biomarkers, both single and interacting pairs, for breast cancer. Researchers prioritized biologically plausible biomarker combinations and used an adaptive elastic net, a penalty that balances l1 and l2, with network constraints. The result of the study shows that their model outperforms simpler models in terms of predictive performance, and they were able to discover both individual biomarkers and interacting gene pairs (Wu).
+
+Another study on breast cancer from 2016 aimed to identify “gene signatures” that predict chemosensitivity, that is, which tumors react to chemotherapy in breast cancer by combining genetic algorithms with sparse logistic regression. What makes this analysis relevant and important is that it predicts which patients will react to chemotherapy, which gives more personalized treatment. However, there are several genes and possible combinations, like genetic algorithms that aid in searching space, while sparse logistic regression aids in reducing characteristics. The results show that SLR-28 and Notch-86, two gene signatures, perform well on training and validation sets in terms of accuracy, specificity, sensitivity, and other metrics (Hu).
+
+One other useful way logistic regression is applied in the medical field is in identifying how the general public makes decisions regarding their health. Researchers in China analyzed 2696 health survey responses collected from individuals across 31 different Chinese provinces. They analyzed the data with a binary logistic regression model to classify points into two categories: unilateral decision making (value of 1), or collaborative decision making (value of 0); the researchers wanted to identify top predictors of individuals that make medical decisions by themselves and which predictors are correlated with patients making health decisions with more than one party (i.e. a patients, doctor, and family member all helping to make the health decision). It was found that most responses were classified as collaborative decision making (70%), which supports the idea that individuals in China strongly value family- made decisions and strong family values. It was also concluded that
+
+significant predictors of unilateral decision making were gender, education level, family status, religious beliefs and occupation (Liu et al., 2024).
+
+Logistic regression also assists road engineers and traffic control around the world by identifying common predictors of traffic accidents and predictors of severe accidents. According to The World Health Organization, one of the most common unnatural causes of death across the world is road accidents, so it is important to identify strong predictors associated with such accidents (Akter et al., 2021). Researchers in China in 2024 conducted a study that aimed to find which factors in traffic are strongly associated with the occurrence of traffic accidents. They used binary logistic regression to model the probability of a traffic accident occurring given a set of 25 predictors related to road safety (cite the source). Another road traffic safety study from 2021 was conducted in Bangladesh to analyze strong predictors of motorcycle accidents. These researchers also utilized a binary logistic regression model to find strong predictors of severe accidents (Akter) \[say what the results are\]. “Modeling Road Accident Severity with Logistic Regression (comparison study)” is a third study exemplifying the use of a binary logistic regression model to analyze traffic risk. Researchers compared the results of the logistic regression model to results of a decision tree mode and a random forest model, and it was found that the logistic regression model were more clear and understandable than the others. All three of these studies concluded by stating that there are several significant variables found when predicting severe road crashes. Knowing these significant predictors helps builders and developers eliminate or reduce these risk factors as they are building new roads; hence, it is crucial to continue researching road accident severity with logistic regression so that road safety is improved (Akter).
+
+Environmental issues can also be studied using logistic regression analysis due to its interesting properties; after all logistic regression is a generalized linear model, which conducts mapping from any real number to probability values. “Priority prediction of Asian Hornet sighting report using machine learning methods” seeks to address the problem of Asian giant hornets. They are an invasive species that pose a significant threat to native bee populations and local beekeeping, as well as to public safety due to their aggressive nature and potent venom. The goal of the research is to create an automated system to predict the priority of Asian giant hornet sighting reports. The authors modeled the priority prediction of sighting reports as a two-classification problem, with classes being either a "true positive" or a "false positive.” Their methodology is a straightforward application of logistic regression with feature extraction. Researchers then used a weighted binary cross-entropy function and the logistic regression is used for mapping the probability given the feature vector. The model achieved an average prediction accuracy of 83.5% on positive reports with the best weighting parameter settings, but still far from other works which achieved about 93% using Deep Learning. It was concluded that this still needs a lot of improvement or maybe it will never outmatch other methods due to hidden limitations.
+
+One other example of logistic regression used in environmental contexts is in the article “Autoregressive Logistic Regression Applied to Atmospheric Circulation Patterns.” Researchers incorporate autoregressive time dependencies into logistic regression for climate modeling. They work with complex climatological dynamic data, and they explain both interpretation and simulation capabilities for weather patterns (Guanche et al., 2014).
+
+## Method
+
+Note: I had to create a cran repository first.
+
+```{r}
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+
+```
+
+Then the following packages were installed and called as libraries
+
+1.  dply
+2.  car
+3.  ResourceSelection
+4.  caret
+5.  pROC
+6.  logistf
+7.  Hmisc
+8.  rcompanion
+9.  ggplot2
+10. knitr
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+pkgs <- c("dplyr", "car", "ResourceSelection", "caret", "pROC",  "logistf", "Hmisc", "rcompanion", "ggplot2", "summarytools", "knitr", "gt", "DescTools")
+invisible(
+  lapply(pkgs, function(pkg) suppressMessages(suppressWarnings(library(pkg, character.only = TRUE))))
+)
+```
+
+Coding the Predictors and Omitting irrelevant values
+
+Because we are using Logistic Regression a Quantitative tool, all predictors and the outcome variable must also be coded to quantitative equivalents. We also had to deal with N/A...so there were predictor variables in the dataset that had "N/A", Unknown, Children and Other. It would be easier to recode all the irrelevant values as "N/A" and get rid of them all at the same time. We also recoded gender to 1 as male and 2 as female. We also limited the bmi predictor to 2 places after the decimal.Finally we recoded all text categorical variables into numeric variables.
+
+```{r}
+#| echo: false
+stroke1 <- read.csv("stroke.csv")
+stroke1[stroke1 == "N/A" | stroke1 == "Unknown" | stroke1 == "children" | stroke1 == "other"] <- NA
+stroke1$bmi <- round(as.numeric(stroke1$bmi), 2)
+stroke1$gender[stroke1$gender == "Male"] <- 1
+stroke1$gender[stroke1$gender == "Female"] <- 2
+stroke1$gender <- as.numeric(stroke1$gender)
+stroke1$ever_married[stroke1$ever_married == "Yes"] <- 1
+stroke1$ever_married[stroke1$ever_married == "No"] <- 2
+stroke1$ever_married <- as.numeric(stroke1$ever_married)
+stroke1$work_type[stroke1$work_type == "Govt_job"] <- 1
+stroke1$work_type[stroke1$work_type == "Private"] <- 2
+stroke1$work_type[stroke1$work_type == "Self-employed"] <- 3
+stroke1$work_type[stroke1$work_type == "Never_worked"] <- 4
+stroke1$work_type <- as.numeric(stroke1$work_type)
+stroke1$Residence_type[stroke1$Residence_type == "Urban"] <- 1
+stroke1$Residence_type[stroke1$Residence_type == "Rural"] <- 2
+stroke1$Residence_type <- as.numeric(stroke1$Residence_type)
+stroke1$avg_glucose_level <- as.numeric(stroke1$avg_glucose_level)
+stroke1$heart_disease <- as.numeric(stroke1$heart_disease)
+stroke1$hypertension <- as.numeric(stroke1$hypertension)
+stroke1$age <- round(as.numeric(stroke1$age), 2)
+stroke1$stroke <- as.numeric(stroke1$stroke)
+stroke1$smoking_status[stroke1$smoking_status == "never smoked"] <- 1
+stroke1$smoking_status[stroke1$smoking_status == "formerly smoked"] <- 2
+stroke1$smoking_status[stroke1$smoking_status == "smokes"] <- 3
+stroke1$smoking_status <- as.numeric(stroke1$smoking_status)
+stroke1 <- stroke1[, !(names(stroke1) %in% "id")]
+
+
+```
+
+```{r}
+stroke1$stroke <- as.factor(stroke1$stroke)
+stroke1_clean <- na.omit(stroke1)
+strokeclean <- stroke1_clean
+fourassume <- stroke1_clean
+```
+
+Showing Descriptive Statistics for all variables, Mean, Std Deviation, and Interquartile Range
+
+```{r}
+#| echo: false
+ descriptivestats <- strokeclean %>%
+  summarise(
+    Mean_Age = mean(age, na.rm = TRUE),
+    Range_Age = paste(range(age, na.rm = TRUE), collapse = " - "),
+    SD_Age = sd(age, na.rm = TRUE),
+    Mean_BMI = mean(bmi, na.rm = TRUE),
+    Range_BMI = paste(range(bmi, na.rm = TRUE), collapse = " - "),
+    SD_BMI = sd(bmi, na.rm = TRUE), # Use lowercase 'bmi' for consistency
+    Mean_AvgGlucoseLvl = mean(avg_glucose_level, na.rm = TRUE),
+    Range_AvgGlucoseLvl = paste(range(avg_glucose_level, na.rm = TRUE), collapse = " - "),
+    SD_AvgGlucoseLvl = sd(avg_glucose_level, na.rm = TRUE)
+  )
+kable(descriptivestats, caption = "Descriptive Statistics")
+```
+
+Looking at the distribution of all the predictor indicators and the outcome indicator with Histograms
+
+```{r}
+ggplot(strokeclean, aes(x = gender)) +
+  geom_bar(fill = "blue", 
+           color = "white") +
+  stat_count(aes(label = ..count..), geom = "text", vjust = -0.5, size = 5) +
+  labs(title = "Histogram of gender", 
+       x = "gender", 
+       y = "Frequency")
+ggplot(strokeclean, aes(x = age)) +
+  geom_histogram(binwidth = 5, 
+                 fill = "green", 
+                 color = "white") +
+  stat_count(aes(label = ..count..), geom = "text", vjust = -0.5, size = 5) +
+  labs(title = "Histogram of Age", 
+       x = "Age", 
+       y = "Frequency")
+
+ggplot(strokeclean, aes(x = hypertension)) +
+  geom_bar(fill = "purple", 
+           color = "white") +
+  stat_count(aes(label = ..count..), geom = "text", vjust = -0.5, size = 5) +
+  labs(title = "Histogram of hypertension", 
+       x = "hypertension", 
+       y = "Frequency")
+
+ggplot(strokeclean, aes(x = heart_disease)) +
+  geom_bar( fill = "orange",
+            color = "white") +
+  stat_count(aes(label = ..count..), geom = "text", vjust = -0.5, size = 5) +
+  labs(title = "Histogram of heart_disease", 
+       x = "HeartDisease", 
+       y = "Frequency")
+
+ggplot(strokeclean, aes(x = ever_married)) +
+  geom_bar(fill = "aquamarine", 
+           color = "white") +
+  stat_count(aes(label = ..count..), geom = "text", vjust = -0.5, size = 5) +
+  labs(title = "Histogram of ever_married", 
+       x = "EverMarried", 
+       y = "Frequency")
+
+ggplot(strokeclean, aes(x = work_type)) +
+  geom_bar(fill = "steelblue", 
+           color = "white") +
+  stat_count(aes(label = ..count..), geom = "text", vjust = -0.5, size = 5) +
+  labs(title = "Histogram of work_type", 
+       x = "WorkType", 
+       y = "Frequency")
+
+ggplot(strokeclean, aes(x = Residence_type)) +
+  geom_bar(fill = "magenta", 
+           color = "white") +
+  stat_count(aes(label = ..count..), geom = "text", vjust = -0.5, size = 5) +
+  labs(title = "Histogram of Residence_type", 
+       x = "Residence_type", 
+       y = "Frequency")
+
+ggplot(strokeclean, aes(x = avg_glucose_level)) +
+  geom_histogram(binwidth = 5, 
+                 fill = "chartreuse", 
+                 color = "white") +
+  stat_count(aes(label = ..count..), geom = "text", vjust = -0.5, size = 5) +
+  labs(title = "Histogram of avg_gloucose_level",
+       x = "avg-glucose_level", 
+       y = "Frequency")
+
+ggplot(strokeclean, aes(x = bmi)) +
+  geom_histogram(binwidth = 5, 
+                 fill = "gold", 
+                 color = "white") +
+  stat_count(aes(label = ..count..), geom = "text", vjust = -0.5, size = 5) +
+  labs(title = "Histogram of bmi", 
+       x = "bmi", 
+       y = "Frequency")
+
+ggplot(strokeclean, aes(x = smoking_status)) +
+  geom_bar(fill = "deepskyblue", 
+           color = "white") +
+  stat_count(aes(label = ..count..), geom = "text", vjust = -0.5, size = 5) +
+  labs(title = "smoking_status", 
+       x = "smoking_status", 
+       y = "Frequency")
+
+ggplot(strokeclean, aes(x = stroke)) +
+  geom_bar(fill = "tan", 
+           color = "white") +
+  stat_count(aes(label = ..count..), geom = "text", vjust = -0.5, size = 5) +
+  labs(title = "Histogram of Age", 
+       x = "stroke", 
+       y = "Frequency")
+
+```
+
+### **Review of Logistic Regression**
+
+Logistic regression is a statistical modeling technique that predicts the probability of a binary outcome (such as 0 or 1) using one or more independent variables.
+
+#### Mathematics Behind Logistic Regression
+
+The key idea is to model the **log odds** (also called the logit) of the probability of the event as a linear function of the predictors:
+
+-   The key idea is to model the **log odds** (also called the logit) of the probability of the event as a linear function of the predictors:
+
+    log⁡(p1−p)=β0+β1x1+β2x2+...+βkxklog(1−pp)=β0+β1x1+β2x2+...+βkxk
+
+    where pp is the probability of the outcome (e.g., stroke), the xixi are predictors, and the βiβi are their coefficients.​
+
+-   Solving for pp, the equation becomes:
+
+    p=11+e−(β0+β1x1+...+βkxk)p=1+e−(β0+β1x1+...+βkxk)1
+
+    This is the **logistic function**, which always outputs values between 0 and 1, making it ideal for probabilities.​
+
+#### Core Concepts
+
+**(1) Odds** are defined as p/(1−p)p/(1-p)p/(1−p), the ratio of the probability of the event to the probability of its complement.
+
+\(2\) The **logit** transformation (natural log of the odds) turns this nonlinear problem into a linear one, so standard linear modeling techniques can be used for estimation.
+
+\(3\) Coefficients (β\betaβ) are commonly estimated using **maximum likelihood** methods, not ordinary least squares.
+
+```{r}
+formula <- stroke ~ gender + age + hypertension + heart_disease + ever_married +
+  work_type + Residence_type + avg_glucose_level + bmi + smoking_status
+```
+
+A comparison between Logistic Regression and Multiple Regression is shown below
+
+| Feature | Multiple Regression | Logistic Regression |
+|------------------------|------------------------|------------------------|
+| Outcome variable type | Continuous (real numbers) | Categorical/Binary (e.g., 0 or 1) |
+| Example prediction | Predicting house prices | Predicting disease presence/absence |
+| Model equation | Linear combination of predictors | Log odds/logit (S-shaped curve: logistic function) |
+| Estimation method | Least squares | Maximum likelihood |
+| Output type | Actual values (e.g., \$125,000) | Probability of being in a category (e.g., 87%) |
+| Usage | Continuous outcome (income, cost, score) | Categorical outcome (yes/no, 0/1) |
+
+As you can see the prediction of having a stroke or not with the outcome variable clearly shows we should use Logistic Regression. Note. The predictor variables can be either categorical or continuous. Its the outcome variable that is critical in choosing.
+
+But before we can run the all the models of Logistic Regression, there are 4 assumptions of Logistic Regression that we need to determine if the dataset and models can run without violating any or all of the assumptions of Logistic Regression. Note testing the assumptions are done for numerical predictors only statistically speaking. Categorical predictors are tested visually with the histograms above.
+
+```{r}
+#| echo: false
+# Assumption 1: The Outcome Variable is 0 or 1
+unique(fourassume$stroke)
+# Assumption 2: There is linear relationship between the outcome variable and each predictor that is numeric. Categorical predictors are reviewed in the histograms avove
+fourassume$ageadj <- fourassume$age + abs(min(fourassume$age)) + 1
+fourassume$avg_glucose_leveladj <- fourassume$avg_glucose_level + abs(min(fourassume$avg_glucose_level)) + 1
+fourassume$bmiadj <- fourassume$bmi + abs(min(fourassume$bmi)) + 1
+str(fourassume)
+numeric_vars <- sapply(fourassume, is.numeric)
+fourassume_numeric <- fourassume[, numeric_vars]
+corr_results <- rcorr(as.matrix(fourassume_numeric))
+fourAdj <- fourassume
+fourAdj <- fourAdj[ , !(names(fourAdj) %in% c("age", "heart_disease", "avg_glucose_level", "bmi")) ]
+model4 <- glm(stroke ~ ageadj + avg_glucose_leveladj + bmiadj, data=fourAdj, family=binomial)
+residualPlots(model4)
+# Assumption 3: Assess Influentional Outliers that are numeric. Categorical predictors are reviewed n the hhistrams above
+alias(model4)
+influencePlot(model4)
+# Assumption 4: Assess Multicollinearity for numeric predictors
+vif_values <- vif(model4)
+max_vif <- max(vif_values)
+infl <-influencePlot(model4, id = FALSE)
+cooks_d <- infl$statistics[, "cookD"]
+n_influential <-sum(cooks_d > 0.5)
+results_table <- data.frame(
+  Check = c(
+    "Max VIF (multicollinearity)",
+    "InfluentialCases (cooks_d > 0.5"
+  ),
+  Value = c(
+    round(max_vif, 2),
+    n_influential
+  )
+)
+kable(results_table, caption = "key Regression Diagnostics")
+
+# Predictive Capability
+model4_CM <- glm(stroke ~ gender + age + hypertension + heart_disease + ever_married + work_type + Residence_type + avg_glucose_level + bmi + smoking_status, data=fourassume, family = binomial)
+```
+
+The three different models of Logistic Regression: Baseline, Firth and Flic Corrections. We are creating 3 different models to really test to see if the dataset had a stroke percentage that is less than the real percentage of stroke to population ratio in the US. Because this is a so called "rare event" Firth regression takes this into account as does its refinement FLIC.
+
+```{r}
+#| echo: false
+# Baseline Logistic Regression
+model_base <- glm(formula, data=strokeclean, family=binomial)
+prob_base <- predict(model_base, type="response")
+
+# Firth Logistic Regression
+model_firth <- logistf(formula, data=strokeclean)
+prob_firth <- predict(model_firth, type="response")
+
+# FLIC Correction (this correction changes the intercept)
+model_flic <- flic(formula, data=strokeclean)
+prob_flic <- predict(model_flic, type="response")
+
+labels <- strokeclean$stroke
+
+```
+
+Creating Youdens J. Youden's J is a good way to look at how well each model balances sensitivity and selectivity. The closer to the curve, a Youden's J is the better the model can distinguish between sensitiviy and selectivity.
+
+```{r}
+#| echo: false
+youden_point <- function(roc_obj) {
+  coords <- coords(roc_obj, "best", best.method = "youden", ret=c("threshold", "sensitivity", "specificity", "youden"))
+  return(coords)
+}
+```
+
+The Three Types of Prediction with 0.5 for consistency
+
+```{r}
+# Predictions with default threshold 0.5 (for output consistency)
+pred_base <- factor(ifelse(prob_base > 0.5, 1, 0), levels=c(0,1))
+pred_firth <- factor(ifelse(prob_firth > 0.5, 1, 0), levels=c(0,1))
+pred_flic <- factor(ifelse(prob_flic > 0.5, 1, 0), levels=c(0,1))
+```
+
+The Function to Compute Metrics
+
+```{r}
+#| echo: false
+  pred_base <- factor(ifelse(prob_base > 0.5, 1, 0), levels=c(0,1))
+  pred_firth <- factor(ifelse(prob_firth > 0.5, 1, 0), levels=c(0,1))
+  pred_flic <- factor(ifelse(prob_flic > 0.5, 1, 0), levels=c(0,1))
+
+  metrics <- function(pred, prob, labels, name) {
+    cm <- confusionMatrix(pred, labels, positive = "1")
+    roc_obj <- suppressMessages(roc(labels, as.numeric(prob)))
+    auc_val <- suppressMessages(auc(roc_obj))
+    precision <- suppressMessages(cm$byClass["Pos Pred Value"])
+    recall <- suppressMessages(cm$byClass["Sensitivity"])
+    f1 <- 2 * ((precision * recall) / (precision + recall))
+    youden <- youden_point(roc_obj)
+    # All list arguments separated by commas only, no '+'
+    list(
+      confusion = cm$table,
+      precision = precision,
+      recall = recall,
+      f1 = f1,
+      auc = auc_val,
+      roc_obj = roc_obj,
+      youden = youden,
+      model = name
+    )
+  }
+
+```
+
+Intialize Results. We have to initialize results before calling the model
+
+```{r}
+#| echo: false
+results_base <- metrics(pred_base, prob_base, labels, "Baseline LR")
+results_firth <- metrics(pred_firth, prob_firth, labels, "firth LR")
+results_flic <- metrics(pred_flic, prob_flic, labels, "flic LR")
+
+df_base <- data.frame(Model = results_base$model,
+                      Precision = results_base$precision,
+                      Recall = results_base$recall,
+                      F1 = results_base$f1,
+                      AUC = as.numeric(results_base$auc),
+                      Youden = results_base$youden)
+df_firth <- data.frame(Model = results_firth$model,
+                       Precision = results_firth$precision,
+                       Recall = results_firth$recall,
+                       F1 = results_firth$f1,
+                       AUC = as.numeric(results_firth$auc),
+                       Youden = results_firth$youden)
+df_flic <- data.frame(Model = results_flic$model,
+                      Precision = results_flic$precision,
+                      Recall = results_flic$recall,
+                      F1 = results_flic$f1,
+                      AUC = as.numeric(results_flic$auc),
+                      Youden = results_flic$youden)
+all_metrics <- bind_rows(df_base, df_firth, df_flic)
+kable(all_metrics, digis = 3, caption = "Logistic Regression Model Metrics Comparison")
+
+
+
+```
+
+```{r}
+plot(results_base$roc_obj, col="cyan", main="ROC Curves: Baseline (blue) vs Firth (red)")
+plot(results_firth$roc_obj, col="magenta", add=TRUE)
+plot(results_flic$roc_obj, col ="gold", add=TRUE)
+auc(results_base$roc_obj)
+auc(results_firth$roc_obj)
+auc(results_flic$roc_obj)
+
+points(
+  1-results_base$youden["specificity"],
+  results_base$youden["sensitivity"],
+  col="cyan", pch=19, cex=1.5
+)
+points(
+  1-results_firth$youden["specificity"],
+  results_firth$youden["sensitivity"],
+  col="magenta", pch=19, cex=1.5
+)
+points(
+  1-results_flic$youden["specificity"],
+  results_flic$youden["sensitivity"],
+  col="gold", pch=19, cex=1.5
+)
+
+legend("bottomright", legend=c("Baseline", "Firth","flic"), col=c("cyan", "magenta", "gold"), lwd=2)
+
+text(
+  x=1-results_base$youden["specificity"], y=results_base$youden["sensitivity"],
+  labels=paste0("Youden: ", round(results_base$youden["youden"], 3)),
+  pos=4, col="cyan"
+)
+text(
+  x=1-results_firth$youden["specificity"], y=results_firth$youden["sensitivity"],
+  labels=paste0("Youden: ", round(results_firth$youden["youden"], 3)),
+  pos=4, col="magenta"
+)
+text(
+  x=1-results_flic$youden["specificity"], y=results_flic$youden["sensitivity"],
+  labels=paste0("Youden: ", round(results_flic$youden["youden"], 3)),
+  pos=4, col="gold"
+)
+```
+
+Here we see the results. Note that overlaying the curves and Youden's J is EXACTLY the same for all three models. This is a strong indication that the dataset is currently balanced enough to distinguish between stroke and non stroke. The bias if any would have shown up in a different AUC curve, and a different Youden's J. It does not.
+
+Plot the Confusion Matrices
+
+```{r}
+par(mfrow = c(3, 1), mar = c(6, 5, 6, 2))  # more top margin for all
+fourfoldplot(results_base$confusion, color = c("lightskyblue", "gold"),
+             conf.level = 0, margin = 1, main = "Baseline Confusion Matrix")
+fourfoldplot(results_firth$confusion, color = c("lightskyblue", "chartreuse"),
+             conf.level = 0, margin = 1, main = "Firth Confusion Matrix")
+fourfoldplot(results_flic$confusion, color = c("cyan", "plum2"),
+             conf.level = 0, margin = 1, main = "Flic Confusion Matrix")
+par(mfrow = c(1,1), mar = c(5, 4, 4, 2)) # Reset to default after
+
+```
+
+The results indicate exactly that the confusion matrices are exactly the same. So the conclusion we can reach is the there was no significant bias in the dataset. The dataset can distinguish between stroke and non stroke events with sufficient selectivity.
+
+**Future Directions and Conclusion**
+
+There are two areas that the resulting analysis showed. (1) Methodological and (2) Changes to the procedure.
+
+\(1\) Methodological Issues:
