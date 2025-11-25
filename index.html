@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Steven Wong">
+
+<title>Stroke Analysis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="LR_SW1124cleanpics_files/libs/clipboard/clipboard.min.js"></script>
+<script src="LR_SW1124cleanpics_files/libs/quarto-html/quarto.js"></script>
+<script src="LR_SW1124cleanpics_files/libs/quarto-html/popper.min.js"></script>
+<script src="LR_SW1124cleanpics_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="LR_SW1124cleanpics_files/libs/quarto-html/anchor.min.js"></script>
+<link href="LR_SW1124cleanpics_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="LR_SW1124cleanpics_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="LR_SW1124cleanpics_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="LR_SW1124cleanpics_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="LR_SW1124cleanpics_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="LR_SW1124cleanpics.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Stroke Analysis</h1>
+<p class="subtitle lead">Logistic Regression Study</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Steven Wong </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction"><strong>Introduction</strong></h2>
+<p>I have chosen to use Logistic Regression as a tool in Data Science to explore a simple dataset to predict stroke. One cannot appreciate the use of Logistic Regression without some knowledge of how it came to be some widely used in healthcare.</p>
+<p>Literature Review</p>
+<p>Logistic Regression came from the logistic function to explain changes in population growth in the United States (Cramer, 2002). According to Malthus the human population left to itself, will increase in geometric progression. One of the mathematicians to study this relationship was Pierre-Francois Verhulst in1838 (Cramer, 2002).</p>
+<p>The relationship for population growth was W(t) = dW(t)/dt. The simplest explanation is that W(t) is proportional to W(t) such that W(t) = βW(t), β = W(t)/W(t), with β the constant state of growth. This leads to exponential growth W(t) = A exp βt. Where A is sometimes replaced by the initial value W (0) (Malthus 1789, quoted in Cramer 2002).</p>
+<p>Verhulst modified the equation by inserting a term to represent increasing resistance to exponential growth W(t) = βW(t) – ϕ(W(t)). Verhulst experimented with various forms of ϕ. The logistic appears when this is a quadratic, hence the equation can be written as:</p>
+<p>W(t) = βW(t)(Ω – W(t))&nbsp; where Ω denotes the upper limit of saturation level of W, Growth is now proportional both to the population already attained W(t)a and to the remaining term</p>
+<p>&nbsp;Ω – W(t). If we express W(t) as a proportion P(t) = βP(t)(1-P(t)) the solution of this differential equation is:</p>
+<hr>
+<hr>
+<p><img src="images/LRHIST.png" class="img-fluid"></p>
+<p>The above equation was named the <u><strong>logistic function</strong></u> (Verhulst, 1938, in Cramer 2002).</p>
+<p>Many authors in the next hundred years applied to logistic function to many fields, e.g.&nbsp;Pearl and Reed used the term logistic in applying the function many areas from fruit flies to the human population of French Colonies in North Africa to growth of Cantaloupes (Reed, 1920 in Cramer 2002).&nbsp; The terms of probit and logit were developed later to broaden and further refine the logistic function (e.g.&nbsp;Bliss and Fisher in 1935 setting out the Maximum Likelihood estimation of the Logistic Curve (Blss and Fisher, 1935 in Cramer 2002). Bliss coined the term probit and was widely accepted in many fields. Thie lognormal curve was used in many areas including the demand curve to buy cigarette lighters. But the logistic function was put forth as an alternative to the normal probability function as done by Joseph Berkstrom (1929 in Cramer 2002). Logit and Probit became widely used in many fields over the next decades. However, interpretations using an abstract model of latent regression equation for an ordered probit model of voting behavior of US Congressmen in 1975 showed its use beyond the field of biology. Analyses linking binary discrete responses to several covariates became known as <u>logistic regression</u> (Cramer, 2002)</p>
+<p>Logistic Regression wide use in all fields came with the advent of computer and statistical software packages such as BMDP in 1977. Hosmer and Lemeshow also published the first book on Logistic Regression in 1989. The multinomial logit was linked to the theory of discrete choice from mathematical psychology by McFaden as a consultant for a California Public Transportation project. This relationship led to the Nobel Prize in 2000 for McFadden (McFadden, 1973 in Cramer 2002).</p>
+<p><u>Breadth of Logistic Regression Widely Used Across Areas of Society</u></p>
+<p>Logistic Regression has been widely used across all areas of Society. In a study by King, Hatcher, and Bride, Logistic Regression was used to look at the Predictability of Adolescent Female Dating Violence Perpetration (King et al., 2015). The study was concerned with the widespread increase in Teen Violence, especially against Adolescent females. The study used data from the National Longitudinal Study of Adolescent Health to look at dating violence risk factors and their ability to predict perpetration by adolescent females, The CDC defines dating violence as a type of intimate partner violence.&nbsp; It occurs between two people in a close relationship (CDC in King et al., 2015). With the perception of dating violence as a public health problem, risk factors have emerged from studies in the field. These include, substance abuse, early sexual intercourse, pregnancy, multiple sex partners, unhealthy weight control, power and control needs, minority status, exposure to violence, and weapons ownership (King et al., 2015).&nbsp; Other factors also cited in King et al., were poor communication, mental health needs (i.e.&nbsp;suicidal thoughts), and poor self-esteem (e.g., depression and self-blame). The Logistic Regression Model’s results were subdivided by demographic variables such as age, gender, and ethnicity (King et al., 2015). The results indicated that only some of these variables were significantly predictive of Dating Violence among teens, underscoring the need for further research (King et al, 2015). Another study by Larbi Cherif et al in 2025 looked a social demographic Determinants of Women’s Entrepreneurship (Larbi Cherif et al., 2025). The authors determined the need for Women’s entrepreneurship as a economic driver in developing countries like Algeria (Larbi Cherif et al, 2025).&nbsp; The authors reviewed data that found only 13.2% of working Algerian women engage in entrepreneurial activities (Larbi Cherif, 2025).&nbsp; The study used logistic regression to find that marital status, age, and educational level were significant determinants of entrepreneurship.&nbsp; More specifically married women, younger women and women with lower educational levels were more likely to pursue entrepreneurship than single, older and women with higher educational levels (Larbi Cherif et al,, 2025).&nbsp; The authors linked these findings to their conclusion that social and cultural contexts have a profound effect on entrepreneurship (Larbi Cherif et al., 2025). Another study by Eliason et al., used logistic regression to link Aggressive Collection Tactics of not-for-profit hospital’s extraordinary collection tactics (ECA’s) against patients included reporting patients’ debt to credit agencies, filing lawsuits, placing liens on residences, and issuing civil arrest (Eliason et al, 2021). The impetus for the author’s study was the continued reports of extraordinary collection activities Not-for-profit hospitals despite the limitations imposed by the Affordable Care Act (ACA).&nbsp; The concern was the Not-for-Profit Hospitals are required by the Affordable Care Act to make reasonable efforts to determine the need for financial assistance (Eliason et al, 2021). Further under IRS regulations the maintenance of Not-for-Profit status of Hospitals are linked to their providing benefits to the community that include free or discounted medical assistance to patients who qualify under the hospital’s financial assistance policy (FAP, IRS 2019a, cited in Eliason et al., 2021). The author’s used the data from Community Benefits Insight that from the years 2015-2016 and 20,967 observations (Eliason et al., 2021). Characteristics of Not-for-Profit Hospitals that used ECA’s were compared against characteristics of Not-for-Profit Hospitals that did not use ECA’s as reported in the news. Such characteristics included urban location, Church affiliation, number of beds, Charity care as a % of total functional expenses, cash, and in-kind contributions to community groups as a % of functional expenses (Eliason et al, 2021). The results found that hospital that did report ECA’s vs those that did not were less likely to file consolidated returns, less likely to be urban, lower number of beds, less likely to have a written FAP policy, less likely to use poverty guidelines to determine free or discounted care, and reported a lower total revenue (Eliason et al., 2021). Another study by Zhang et al, used logistic regression to determine the influences of explanatory factors on the efficacy of implantation of corporate safety policy in international projects from the perspective of international contractors (Zhang et al, 2019). The factors looked at included attitudes toward safety management measures, operational measures for safety management, systematic safety training schemes, The authors used a questionnaire distributed to international contractors in China (Zhang et al, 2019). The logistic regression model found significant factors were implemental and environmental characteristics in the perceived effective implementation of corporate safety policies (Zhang et al 2019).</p>
+<p><u>Logistic Regression in Stroke</u></p>
+<p>While Logistic Regression has been widely used in many areas of the world in different areas, one area in healthcare where Logistic Regression has been widely used and still is in the prediction of stroke. One study was using logistic regression to identify key inflammatory markers of mortality in Acute Ischemic Stroke (Yural and Kumaglu 2025). In their study, the authors used Logistic Regression on 219 Acute Ischemic Stroke (AIS) patients to determine significant predictors.&nbsp; In this study the authors listed age, sex, diabetes, high systolic blood pressure, elevated lipoprotein levels, high cholesterol levels, renal dysfunction, high body mass index (BMI), atrial fibrillation and coronary artery disease and the timing of interventions such as tissue plasminogen activator administration and endovascular thrombectomy (Yural at Kumaglu 2025) . The authors found that age, and albumin were significant predictors of having stroke or not and gender wasn’t (Yural and Kumaglu, 2025). The authors did state the gender was significant in stroke determination in other studies and that larger sample sizes may bear this out (Yural and Kumaglu, 2025). Another study ranked stroke and cardiovascular risk factors for an optimal risk calculator design (Cuadro-Godia et al, 2019). The authors’ used logistic regression to rank stroke and cardiovascular risk factors to formulate an optimal risk calculator (Cuadro-Godia et al., 2019). Among stroke and cardiovascular risk factors were Age, Gender, Smoking Status, Plaque score on the left and right atrium, blood pressure, cholesterol level, ldl and hdl,&nbsp; family history of stroke, and hypertension (Cuadro-Godia et al., 2019). The sample consisted of 494 ultrasound scans on 202 patients. The results found significance of bp and certain protein factors as risk factors in stroke (Cuadro-Godia et al., 2019). Another study used logistic regression in looking ate influences of hyperlipidemia history on stroke outcome (Shigematsu et al., 2015). The authors used 12,617 stroke patients from the Kyoto Stroke Registry. Among the variables the authors used were age, gender, stroke type, systolic and diastolic blood pressure, hypertension, diabetes, cigarette smoking, alcohol consumption, Activities of Daily Life (ADL) and Pct Mortality (Ie death). The authors found interestingly that while hyperlipidemia increases the possibility of stroke, it also makes it less severe (Shigematsu et al., 2015). Another study used logistic regression to determine the influence of copper intake to the risk of stroke in adults (Yang et al, 2022). The authors explored the relationship between copper intake and stroke based on a sample of 10,550 participants in the National Health and Nutrition Survey (NHANES), over a 5-year period from 2013-2018 (Yang et al., 2022). A stratified logistic regression analysis found that copper had a significant protective effect for women, individuals younger than 65 years old, individuals with hypertension, individuals who smoke, and diabetic stroke patients (Yang et al., 2022). Finally a ordered logistic regression study by He et al., in 2025 looked at the correlation between acute ischemic stroke, and triglyceride-glucose index (TyG) (He et al, 2025). The authors looked at 165 individuals with acute ischemic stroke treated by intravenous alteplase (He et al., 2025). The study found that a higher TyG index, indicating greater insulin resistance is associated with worse neurological outcomes in stroke patients and further study is needed to look at neurological recovery (He et al., 2025).</p>
+<p>These studies are indicative of the wide use of logistic regression in stroke. This gave us the impetus to choose logistic regression to study in predicting stroke, using the Kaggle dataset.</p>
+<p>Nevertheless, while the dataset from Kaggle is useful to show the technique of logistic regression in predicting stroke, it comes with some limitations. There are studies that look at the relationship between a dataset and the appropriateness of techniques used to analyze it. One such study by Bailly et al., looked at the effects of dataset size and interactions on the prediction performance of logistic regression and deep learning models (Bailly et al., 2022). In their study the authors acknowledge the power of deep learning and machine learning in predicting the presence or absence of a disease (Bailly et al., 2022). To achieve good prediction these models, require a certain amount of data to train on and where this amount of data is limited and there are difference in dataset structure an content, the authors study looks at these effects on accuracy, sensitivity, specificity, area under the curve (AOC) and the F1 score, all derived from the confusion matrix (Bailly et al., 2022). Among their findings were that logistic regression and Neural Networks were subject to uncertainty (Bailly et al, 2022). &nbsp;That with the two types of uncertainly, aleatory uncertainty (uncertainly in the data itself, which cannot be reduced), and epistemic uncertainty (uncertainty due to model design) that can be reduced by adding additional knowledge) , and by using synthetic data the authors were able to conclude among other issues that logistic regression outperformed Neural Networks with our without interactions regardless of sample size (Bailly et al., 2022).Another study looked at seven data mining algorithms on different characteristics of datasets for biomedical classification (Zhang et al.,2017). The authors looked at 7 data mining algorithms, c45, support vector machines, AdaBoost, K-nearest neighbor, Naïve Bayes, random forest, and logistic regression. The authors applied these techniques to 12 public UCI datasets with the tasks of classification and compared their performances thru induction and analysis Zhang et al., 2017). &nbsp;Among the results the authors found that Logistic Regression is suitable for small datasets with high correlations between the task and other non-task attributes (Zhang e al., 2017). Finally, a study compared logistic regression and Naïve Bayes classifiers in landslide susceptibility assessment. The influence of the model’s complexity and training dataset size (Tsangaratos and Illia, 2016). The authors used a dataset of 116 sites located on the mountains of Epirus Greece where serious landslides have been encountered (Tsangaratos and Ilia, 2016).&nbsp; Classifying the land as landslide and not landslide using 9 datasets. Based on the combined data, with the complexity of the data and the number of characteristics of the land, The Naïve Bayes Classifier outperformed Logistic Regression (87.5% vs 82.16%). The conclusion was the Logistic Regression worked best with defined datasets and that as dataset complexity increases, Logistic Regression’s accuracy decreases relative to the Naïve Bayes Classifier (Tsangaratos and Illia, 2016). Finally its widely used in Clinical Healthcare due to its applicablity in Disease prevalence and clinical interpretation (Hua, et al., 2025)</p>
+<p><u>Summary</u></p>
+<p>To summarize, Logistic Regression is a widely used classifier technique used across knowledge fields in the world and in healthcare. Its used widely in bi outcome disease detection including stroke, but that there are limitations to Logistic Regression including messy non defined datasets and N size.</p>
+</section>
+<section id="method" class="level2">
+<h2 class="anchored" data-anchor-id="method">Method</h2>
+<p>We chose our topic as logistic regression. So What is logistic regression?</p>
+<p><strong>Mathematically:</strong></p>
+<p>Logistic regression is a statistical modeling technique that predicts the probability of a binary outcome (such as 0 or 1) using one or more independent variables.</p>
+</section>
+<section id="mathematical-formulation" class="level2">
+<h2 class="anchored" data-anchor-id="mathematical-formulation">Mathematical Formulation</h2>
+<p>The key idea is to model the <strong>log odds</strong> (also called the logit) of the probability of the event as a linear function of the predictors:</p>
+<ul>
+<li>log⁡(p1−p)=β0+β1x1+β2x2+…+βkxklog(1−pp)=β0+β1x1+β2x2+…+βkxk</li>
+</ul>
+<p>where pp is the probability of the outcome (e.g., stroke), the xixi are predictors, and the βiβi are their coefficients.​</p>
+<ul>
+<li><p>Solving for pp, the equation becomes:</p></li>
+<li><p>p=11+e−(β0+β1x1+…+βkxk)p=1+e−(β0+β1x1+…+βkxk)1</p></li>
+</ul>
+<p>This is the <strong>logistic function</strong>, which always outputs values between 0 and 1, making it ideal for probabilities.​</p>
+<p>Here is a picture of Logistic Regression on a predictor variable.</p>
+</section>
+<section id="logistic-function-example" class="level2">
+<h2 class="anchored" data-anchor-id="logistic-function-example">Logistic Function Example</h2>
+<hr>
+<hr>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/LogisticFunctionEg.png" class="img-fluid figure-img"></p>
+<figcaption>Logistic Function Example</figcaption>
+</figure>
+</div>
+<p><strong>Patient data points</strong> (age, glucose, hypertension, heart disease, BMI, smoking status) are plotted and colored by stroke outcome (0 = no stroke, 1 = stroke).</p>
+<p>The <strong>logistic regression curve</strong> (S-shaped sigmoid) fits the data and maps predictor values to estimated stroke probability.</p>
+<p>A <strong>vertical threshold line</strong> (at probability 0.5) divides the plot, indicating the decision boundary for binary classification.</p>
+<p><strong>Below the curve</strong>: patients more likely classified as “no stroke.”</p>
+<p><strong>Above the curve</strong>: patients more likely classified as “stroke.”</p>
+<p><strong>(1) Odds</strong> are defined as p/(1−p)p/(1-p)p/(1−p), the ratio of the probability of the event to the probability of its complement.</p>
+<p>(2) The <strong>logit</strong> transformation (natural log of the odds) turns this nonlinear problem into a linear one, so standard linear modeling techniques can be used for estimation.</p>
+<p>(3) Coefficients (β) are commonly estimated using <strong>maximum likelihood</strong> methods, not ordinary least squares.</p>
+<p>A comparison between Logistic Regression and Multiple Regression is shown below</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>Feature</td>
+<td>Multiple Regression</td>
+<td>Logistic Regression</td>
+</tr>
+<tr class="even">
+<td>Outcome variable type</td>
+<td>Continuous (real numbers)</td>
+<td>Categorical/Binary (e.g., 0 or 1)</td>
+</tr>
+<tr class="odd">
+<td>Example prediction</td>
+<td>Predicting house prices</td>
+<td>Predicting disease presence/absence</td>
+</tr>
+<tr class="even">
+<td>Model equation</td>
+<td>Linear combination of predictors</td>
+<td>Log odds/logit (S-shaped curve: logistic function)</td>
+</tr>
+<tr class="odd">
+<td>Estimation method</td>
+<td>Least squares</td>
+<td>Maximum likelihood</td>
+</tr>
+<tr class="even">
+<td>Output type</td>
+<td>Actual values (e.g., $125,000)</td>
+<td>Probability of being in a category (e.g., 87%)</td>
+</tr>
+<tr class="odd">
+<td>Usage</td>
+<td>Continuous outcome (income, cost, score)</td>
+<td>Categorical outcome (yes/no, 0/1)</td>
+</tr>
+</tbody>
+</table>
+<p>We chose a dataset by Fedesoriano in Kaggle to use logistic regression on. The dataset has 5110 observations with 12 variables.</p>
+<p>(1) Unique ID</p>
+<p>(2) Gender (Male, Female, Other) – variable type: categorical</p>
+<p>(3) Age – variable type: continuous</p>
+<p>(4)&nbsp; Hypertension (Hypertension, no Hypertension) -variable type: categorical</p>
+<p>(5)&nbsp; Heart Disease (heart disease, no heart disease) – variable type: categorical</p>
+<p>(6) Marital Status (married, or not married) – variable type: categorical</p>
+<p>(7) Work Type (private, self-employed, other, public service, children) – variable type: categorical</p>
+<p>(8)&nbsp; Residence Type (urban, rural) – variable type: categorical</p>
+<p>(9) Average Glucose Level (In the blood) – variable type - continuous</p>
+<p>(10) BMI (Body Mass Index) -variable type - continuous</p>
+<p>(11) Smoking Status (smokes, formerly smokes, never smoked, unknown) – variable type: categorical</p>
+<p>(12) Stroke (Stroke or no Stroke) variable type: categorical (the outcome variable)</p>
+<p><strong>Since the outcome variable stroke 2 outcomes (stroke or no stroke), the choice is confirmed to be logistic regression as the model to be used on this dataset.</strong></p>
+<p>&nbsp;We then uploaded the Kaggle dataset into R studio server and analyzed it with R. We first utilized 12 different packages and libraries. They are listed below. These packages and libraries gave us the statistical models we then used to analyze the Kaggle dataset.</p>
+<p>1. dplyr</p>
+<p>2. car</p>
+<p>3. ResourceSelection</p>
+<p>4. caret</p>
+<p>5. pROC</p>
+<p>6. logistf</p>
+<p>7. Hmisc</p>
+<p>8. rcompanion</p>
+<p>9. ggplot2</p>
+<ol start="10" type="1">
+<li>knitr</li>
+<li>summarytools</li>
+<li>DescTools</li>
+</ol>
+<p>We first prepared the data, ensuring that all variables in the dataset, both predictor and outcome variables were converted or recoded to numeric as follows:</p>
+<p>(1) age (continuous), we decided to recode to numeric with 2 places after the decimal.</p>
+<p>(2) gender (categorical) we coded 1 for male and 2 for female. There was only 1 case where it was coded other. We recoded other as N/A. We coded this as categorical.</p>
+<p>(3) hypertension had 2 categories and was coded as categorical</p>
+<p>(4) heart disease had 2 categories and was coded as categorical</p>
+<p>(5) marital status had 2 categories, married, or not married and was coded as categorical</p>
+<p>(6) Work type had 4 categories1 = Government, 2 = private sector, 3 = self-employed, 4 = never worked and was coded as categorical</p>
+<p>(7) residence type had 2 categories rural and urban and was coded as categorical</p>
+<p>(8) bmi (continuous) was recoded as numeric with 2 places after the decimal</p>
+<p>(9) average glucose level(continuous) was recoded as numeric with 2 places after the decimal</p>
+<p>(10) smoking status had 4 categories, smoking, nonsmoking, previous smoking, and other. It was coded as categorical.</p>
+<p>(11) ID number -was left as is and deleted because it’s not needed</p>
+<p>&nbsp;(12) Stroke (outcome is categorical has 2 categories, 1 = stroke, 0 = no stroke</p>
+<p>&nbsp;Once that was done, we got rid of extraneous values such as “N/A”. After deleting rows that were useless or irrelevant values were left with a dataset of 3357 cases, 11 predictor variables and an outcome variable. As the rule of thumb for minimal size to run analyses is 15 cases per number of predictor variables. &nbsp;Applying this rule of thumb to our project, the dataset’s minimum is 132 cases. Since the cleaned dataset has 3357 cases, we can use logistic regression on the dataset.</p>
+<p>Once the variables were coded correctly, we then confirmed it and ran a histogram to confirm the values for each categorical variable and reviewed the frequency distribution for the numerical variables.</p>
+<p>In addition, we ran the mean, range, and standard deviation for numerical variables.</p>
+<p>We then turned to the use of logistic regression on the dataset. For logistic regression to be used on the dataset, it had to pass 6 assumptions</p>
+<p><u>(1) Assumption 1: The outcome variable was binary.&nbsp; In this case 0 or 1.</u></p>
+<p>We can confirm this from the histogram of the outcome variable (stroke or no stroke)</p>
+<p><u>(2) Assumption 2: There is a linear relationship between i.e., Logit (log- of the odds ratio) of the outcome and each continuous linear predictor is linear</u></p>
+<p>Mathematically logit (p) = Log ).</p>
+<p>We Test for this with the Box-Tidwell test to check for linearity between the predictors and the logit. The procedure adds the log transformed interaction terms between the continuous independent variables. The interaction terms is then added as a new variable, so for example Age becomes ln (Age).</p>
+<p>Note: For the Box Tidwell test we will filter the dataset to keep continuous independent predictors. We then add the interaction terms and re-run the logistic regression. We then check the interaction terms and look for the P values. If there are not statistically significant P values I.e., P ≥ .05 then the variables are linearly related to the logit outcome variable and the assumption is satisfied.</p>
+<p><u>(3) Assumption 3: No influential outliers. Influential outliers distort the accuracy and outcome of the model</u>.</p>
+<p>We can check for this with Cooks D (Cooks Distance) to determine the influence of a data point. Cooks D is calculated based on its residual and leverage. It summarizes the changes in the regression model when that particular (ith) observation s removed. As a popular method the threshold is 4/N where N is the number of observations. If Cooks distance is &gt; 4/N rt hen we have influential outliers. We can also plot Cooks D. Data points with standardized residual values greater than 5 represent possible extreme outliers.</p>
+<p>(<u>4) Assumption 4: No multicollinearity</u>. Multicollinearity is where the data set contains strongly correlated independent variables. This becomes a problem because it reduces the statistical power of the logistic regression model. We can check this with VIF (Variance Inflation Factor).</p>
+<p>Mathematically:&nbsp; VIF = the ratio of the overall Model variance to the variance of a model that includes only that single independent variable. The smallest possible value for VIF = 1 (a complete absence of multicollinearity).&nbsp; A rule of thumb says a VIF values that exceeds 5 or 10 indicates a problem with multicollinearity.</p>
+<p><u>(5) Assumption 5: Independence of Observations.</u> Each observation is independent of each other. Ie they are not repeated or paired data. Based on the definition of the Kaggle dataset, each observation of the Kaggle dataset is a different patient. So, this assumption is met.</p>
+<p><u>(6) Assumption 6: The dataset N size.</u> If we have small N size, it affects Logistic Regression in several ways:</p>
+<ol type="a">
+<li>Bias in the Parameter Estimates:</li>
+</ol>
+<p>1.the Maximum Likelihood Estimate (MLE) used for Logistic Regression can produce biased estimates. Especially If the events are rare.</p>
+<ol start="2" type="1">
+<li>Odds ratios tend to be overestimated and standard errors for coefficients become large and unreliable.</li>
+</ol>
+<p>b. Separation Problems: With very small samples, we may have complete or quasi- complete separation. The optimizer cannot estimate finite parameters and the standard logistic regression will fail to converge.&nbsp;</p>
+<p>c.&nbsp; Statistical Power:&nbsp; A small N size means low statistical power, in other words. Unable to detect true associations. Especially for less frequent predictors or outcomes.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+<p>We can test for this with a rule of thumb:&nbsp; There needs to be at least 10 cases for every predictor and a minimal total of 500 cases. Since we have 12 predictors the minimum number of cases is 12 x 10 = 120 cases.</p>
+<p>Once we determine that the assumptions are met, we plan to look at 3 different logistical regression models, the base logistic regression, a firth logistic regression model and a refinement of the firth logistic regression model called FLIC.</p>
+<p><u>Developing 3 Different Logistic Regression Models</u></p>
+<p>We decided to develop 3 different logistic regression models. The rationale for this came from the percentage of strokes from the Kaggle dataset compared to the percentage of strokes in the US. The Percentage of strokes in the Kagle dataset is 5.6%, Compared the CDC’s percentage of strokes at 3.1%.&nbsp; There are problems with bias, separation and skewed predicted probabilities.</p>
+<p>(1) Small Sample Bias is an issue where the outcome is a stroke, is rare, which could produce biased parameter estimates. So, there is a danger of over or under estimation of stroke risk, because the datasets prevalence rate differs from population in the US.</p>
+<p>(2) Separation: if the dataset is imbalanced there is a danger of categories of predictors predicting the outcome at perfect percentage of 100% or near perfect. The Coefficient estimates cam become infinite or very large making the basic logistic regression model unreliable.</p>
+<p>(3)&nbsp; miscallibrated probabilities: The predicted probabilities from standard logistic regression can be skewed when the datasets outcome of a stroke, 5.6% doesn’t match the population levels.</p>
+<p>Because of these reasons, 2 alternative models are being used to compare. Firth Regression and Refinement of Firth Regression called FLIC.</p>
+<p>In datasets of rare events, Firth Regression introduces bias reduction thru Jeffries Prior that reduces the biases in datasets with rare events.&nbsp; This pulls parameter estimates away from infinity and large numbers.</p>
+<p>Firth regression produced refined finite estimates even if there is perfect prediction between predictors that perfectly separate stroke vs no stroke cases.</p>
+<p>Finally, Firth Regression produces results like large sample size.</p>
+<p>probability calibration: Firth regression, while correcting bias, tends to bias predicted event probabilities (average predicted&nbsp;&nbsp; toward 0.5. Your stroke model could predict higher risk for all, regardless of the actual prevalence.</p>
+<p>FLIC (Firth’s logistic regression with intercept correction) adjusts the intercept after fitting the model so that the average predicted probability exactly matches the observed rate in your data (5.6% in this case). This is especially useful if your sample prevalence intentionally differs from the “true” population prevalence, as in case-control studies or enriched samples.</p>
+<p><u>Analyzing the 3 models</u></p>
+<p>The Three different Models of Logistic Regression: Baseline Firth and Flic Correction. We are creating 3 different models to really test to see if the dataset had a stroke percentage that is less than the real percentage of stroke to population ratio in the US. Because this is a so called “rare event” Firth regression takes this into account. as does its refinement FLIC.</p>
+<p>We will then compare &nbsp;the models performance by &nbsp;using a confusion matrix, area under curve (AUC) and Youden’s J</p>
+<p>A confusion matrix is a tool used to evaluate the performance of a classification model (in this case a logistic regression model classifying the outcome as stroke or no stroke. It’s way of comparing true and false positives and true and false negatives. This is very similar to a type1/type 2 error table in regression analysis. The difference being in that the type1/type 2 error table looks at the probability of error to predict to the population whereas the confusion matrix looks at model categorization.</p>
+<p><strong>A Typical Confusion Matrix</strong></p>
+<hr>
+<hr>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/confusionmatrix.png" class="img-fluid figure-img"></p>
+<figcaption>Confusion Matrix measures</figcaption>
+</figure>
+</div>
+<hr>
+<hr>
+<p><img src="images/ConfusionMeasures.png" class="img-fluid"></p>
+<p>A Confusion Matrix creates several measures of a categorical model’s performance.</p>
+<p>Youden’s J ranges from 0 (No diagnostic ability) to 1 (Perfect Diagnostic Ability). In other words, a 0 means the model performance no better than chance, while a 1 means the model has perfect sensitivity and specificity. It’s used to see the optimal threshold for a model.</p>
+<p>Graphically The point on the ROC curve where J is maximized is farthest from its diagonal and represents the best trade off between specificity and sensitivity.</p>
+<p>Youden’s J is valuable as a single performance metric that gives equal weight to false positives and false negatives. This makes it useful in medical diagnostics where balanced accuracy is crucial.</p>
+<p>Youden’s J</p>
+<hr>
+<hr>
+<p><img src="images/Youden.png" class="img-fluid"></p>
+<p><strong>Results and Analyses</strong></p>
+<p>Coding the Predictors and Omitting irrelevant values</p>
+<p>Because we are using Logistic Regression a Quantitative tool, all predictors and the outcome variable must also be coded to quantitative equivalents. We also had to deal with N/A…so there were predictor variables in the dataset that had “N/A”, Unknown, Children and Other. It would be easier to recode all the irrelevant values as “N/A” and get rid of them all at the same time. We also recoded gender to 1 as male and 2 as female. We also limited the bmi predictor to 2 places after the decimal.Finally we recoded all text categorical variables into numeric variables.</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: NAs introduced by coercion</code></pre>
+</div>
+</div>
+<p>Showing Descriptive Statistics for all variables, Mean, Std Deviation, and Interquartile Range</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Descriptive Statistics</caption>
+<colgroup>
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 16%">
+<col style="width: 17%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Mean_Age</th>
+<th style="text-align: left;">Range_Age</th>
+<th style="text-align: right;">SD_Age</th>
+<th style="text-align: right;">Mean_BMI</th>
+<th style="text-align: left;">Range_BMI</th>
+<th style="text-align: right;">SD_BMI</th>
+<th style="text-align: right;">Mean_AvgGlucoseLvl</th>
+<th style="text-align: left;">Range_AvgGlucoseLvl</th>
+<th style="text-align: right;">SD_AvgGlucoseLvl</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">49.38725</td>
+<td style="text-align: left;">13 - 82</td>
+<td style="text-align: right;">18.31051</td>
+<td style="text-align: right;">30.43953</td>
+<td style="text-align: left;">11.5 - 92</td>
+<td style="text-align: right;">7.249738</td>
+<td style="text-align: right;">108.4443</td>
+<td style="text-align: left;">55.12 - 271.74</td>
+<td style="text-align: right;">47.92139</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Looking at the distribution of all the predictor indicators and the outcome indicator with Histograms</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="LR_SW1124cleanpics_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;ggplot2::labels&gt; List of 3
+ $ x    : chr "gender"
+ $ y    : chr "Frequency"
+ $ title: chr "Histogram of gender"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value `binwidth`.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="LR_SW1124cleanpics_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="LR_SW1124cleanpics_files/figure-html/unnamed-chunk-6-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="LR_SW1124cleanpics_files/figure-html/unnamed-chunk-6-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="LR_SW1124cleanpics_files/figure-html/unnamed-chunk-6-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="LR_SW1124cleanpics_files/figure-html/unnamed-chunk-6-6.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="LR_SW1124cleanpics_files/figure-html/unnamed-chunk-6-7.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="LR_SW1124cleanpics_files/figure-html/unnamed-chunk-6-8.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="LR_SW1124cleanpics_files/figure-html/unnamed-chunk-6-9.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="LR_SW1124cleanpics_files/figure-html/unnamed-chunk-6-10.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="LR_SW1124cleanpics_files/figure-html/unnamed-chunk-6-11.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="the-basic-logistic-regression-model" class="level3">
+<h3 class="anchored" data-anchor-id="the-basic-logistic-regression-model">The Basic Logistic Regression Model</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 0
+Levels: 0 1</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   3357 obs. of  14 variables:
+ $ gender              : num  1 1 2 2 1 1 2 2 2 2 ...
+ $ age                 : num  67 80 49 79 81 74 69 81 61 54 ...
+ $ hypertension        : num  0 0 0 1 0 1 0 1 0 0 ...
+ $ heart_disease       : num  1 1 0 0 0 1 0 0 1 0 ...
+ $ ever_married        : num  1 1 1 1 1 1 2 1 1 1 ...
+ $ work_type           : num  2 2 2 3 2 2 2 2 1 2 ...
+ $ Residence_type      : num  1 2 1 2 1 2 1 2 2 1 ...
+ $ avg_glucose_level   : num  229 106 171 174 186 ...
+ $ bmi                 : num  36.6 32.5 34.4 24 29 27.4 22.8 29.7 36.8 27.3 ...
+ $ smoking_status      : num  2 1 3 1 2 1 1 1 3 3 ...
+ $ stroke              : Factor w/ 2 levels "0","1": 2 2 2 2 2 2 2 2 2 2 ...
+ $ ageadj              : num  81 94 63 93 95 88 83 95 75 68 ...
+ $ avg_glucose_leveladj: num  285 162 227 230 242 ...
+ $ bmiadj              : num  49.1 45 46.9 36.5 41.5 39.9 35.3 42.2 49.3 39.8 ...
+ - attr(*, "na.action")= 'omit' Named int [1:1753] 2 9 10 14 20 24 28 30 32 39 ...
+  ..- attr(*, "names")= chr [1:1753] "2" "9" "10" "14" ...</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="LR_SW1124cleanpics_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     Test stat Pr(&gt;|Test stat|)
+ageadj                  1.9958           0.1577
+avg_glucose_leveladj    0.0070           0.9331
+bmiadj                  0.3549           0.5514</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Model :
+stroke ~ ageadj + avg_glucose_leveladj + bmiadj</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="LR_SW1124cleanpics_files/figure-html/unnamed-chunk-8-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>key Regression Diagnostics</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Check</th>
+<th style="text-align: right;">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Max VIF (multicollinearity)</td>
+<td style="text-align: right;">1.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">InfluentialCases (cooks_d &gt; 0.5</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>As you can see, the red flat lines for the 4 graphs indicate no nonlinear relationship between each numerical predictor and the outcome variable. In addition one can also see there are no influential outliers by shown by cook’s D.</p>
+<p>Intialize Results. We have to initialize results before calling the model</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Logistic Regression Model Metrics Comparison</caption>
+<colgroup>
+<col style="width: 13%">
+<col style="width: 8%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 6%">
+<col style="width: 12%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Model</th>
+<th style="text-align: right;">Precision</th>
+<th style="text-align: right;">Recall</th>
+<th style="text-align: right;">F1</th>
+<th style="text-align: right;">AUC</th>
+<th style="text-align: right;">Youden.threshold</th>
+<th style="text-align: right;">Youden.sensitivity</th>
+<th style="text-align: right;">Youden.specificity</th>
+<th style="text-align: right;">Youden.youden</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Pos Pred Value…1</td>
+<td style="text-align: left;">Baseline LR</td>
+<td style="text-align: right;">1.0000000</td>
+<td style="text-align: right;">0.0111111</td>
+<td style="text-align: right;">0.0219780</td>
+<td style="text-align: right;">0.828458</td>
+<td style="text-align: right;">0.0693444</td>
+<td style="text-align: right;">0.7444444</td>
+<td style="text-align: right;">0.7777778</td>
+<td style="text-align: right;">1.522222</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pos Pred Value…2</td>
+<td style="text-align: left;">firth LR</td>
+<td style="text-align: right;">0.6666667</td>
+<td style="text-align: right;">0.0111111</td>
+<td style="text-align: right;">0.0218579</td>
+<td style="text-align: right;">0.828458</td>
+<td style="text-align: right;">0.0710034</td>
+<td style="text-align: right;">0.7444444</td>
+<td style="text-align: right;">0.7777778</td>
+<td style="text-align: right;">1.522222</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pos Pred Value…3</td>
+<td style="text-align: left;">flic LR</td>
+<td style="text-align: right;">1.0000000</td>
+<td style="text-align: right;">0.0111111</td>
+<td style="text-align: right;">0.0219780</td>
+<td style="text-align: right;">0.828458</td>
+<td style="text-align: right;">0.0693544</td>
+<td style="text-align: right;">0.7444444</td>
+<td style="text-align: right;">0.7777778</td>
+<td style="text-align: right;">1.522222</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Area under the curve: 0.8285</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Area under the curve: 0.8285</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Area under the curve: 0.8285</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="LR_SW1124cleanpics_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Here we see the results. Note that overlaying the curves and Youden’s J is EXACTLY the same for all three models. This is a strong indication that the dataset is currently balanced enough to distinguish between stroke and non stroke. The bias if any would have shown up in a different AUC curve, and a different Youden’s J. It does not.</p>
+<p>Plot the Confusion Matrices</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="LR_SW1124cleanpics_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The results indicate exactly that the confusion matrices are exactly the same. So the conclusion we can reach is the there was no significant bias in the dataset. The dataset can distinguish between stroke and non stroke events with sufficient selectivity. While there is a slight difference in Youden;’s cutoff from .069 in the base model, to .071 in the FIRTH model, to .069 in the FLIC model This means that FIRTH did adjust the predicted threshold minimally. However, practically this means virtually no change in the prediction across models.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 28%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>Model</td>
+<td>AUC</td>
+<td>Youden’s J</td>
+<td>Interpretation</td>
+</tr>
+<tr class="even">
+<td>Standard</td>
+<td>Same</td>
+<td>Same</td>
+<td>Dataset is stable, no fitting method advantage</td>
+</tr>
+<tr class="odd">
+<td>Firth</td>
+<td>Same</td>
+<td>Same</td>
+<td>No separation or bias detected</td>
+</tr>
+<tr class="even">
+<td>FLIC</td>
+<td>Same</td>
+<td>Same</td>
+<td>Same discriminative ability, robust prediction</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Future Directions and Conclusion</strong></p>
+<p>Because the AUC and Youden’s J are the same, with the predictability of the model at 86.5%, the same. I don’t see any more we can do for this dataset, given its predictor variables are well known in other stroke studies. Logistic Regression appears to be the best fitting algorithm for predicting stroke for this dataset. Using SMOTE might give an incremental increase in prediction, but given the well defined dataset and the common stroke risk factors, I dont think we need to run anymore tests. In summary, Logistic Regression is a very good algorithm to use on this dataset. As long as the dataset is well defined and non-complex.</p>
+<p><strong>References</strong></p>
+<p>American Psychological Association (2020). <em>Publication Manual of the American Psychological Association</em> (7<sup>th</sup> ed). https//doi.org/10.1037/0000165-000</p>
+<p>Bailly, A., Blanc, C., Francis, E., Guillotin, T., Jamal, F., Wakim, B., Roy, P (2022). Effects of dataset size and interactions on the prediction performance of logistic regression and deep learning models. <em>Computer Methods and Programs in Biomedicine</em>. Vol 213 (2022) 106504. <a href="https://doi.org/10.1016/j.cmph.2021.106504" class="uri">https://doi.org/10.1016/j.cmph.2021.106504</a>.</p>
+<p>Cramer, J, S. (2002). The Origins of Logistic Regression<em>. Tinbergen Institute Discussion Paper.</em> TI 2002-119/4. Pgs. 1-14.</p>
+<p>Cuadrado-Godia, E., Jamthikar, D, A., Gupta, D., Khanna, N, N., Araki, T., Maniruzzamen, M., Saba, L., Nicolaides, A., Sharma, A., Omerzu, T., Suri, S., H., Gupta, A., Mavrogeni, S., Turk, M., Laird, R, J., Protogerou, A., Sfikakis, P., Kitas, D, G., Viswanathan, V., Suri, S, J. (2019). Ranking stroke and cardiovascular risk factors for &nbsp;&nbsp;&nbsp; an optimal calculator design. Logistic Regression Approach. <em>Computers in Biology and Medicine</em> Vol 108, 182-195. https://doi.org/10.1016/j.compbiomed.2019.03.020</p>
+<p>Eliason, L, E., MacDougall, H., Peterson, L. (2022). Understanding the Aggressive Practices of Nonprofit Hospitals in Pursuit of Patient Debt<em>. Health &amp; Social Work</em>. 47(1). 36-44. <a href="https://academic.oup.com/hsw/article47/1/36/6459097" class="uri">https://academic.oup.com/hsw/article47/1/36/6459097</a></p>
+<p>King, M, D., Hatcher, S, S., Bride, B. (2015). An Exploration of Risk Factors Associated With Dating Violence: Examining the Predictability of Adolescent Female Dating Violence Perpetration. <em>Journal of Human Behavior in the Social Environment</em>. Vol 25,907-922. https:// doi.org/10.1080/10911359.2015.1040907</p>
+<p>Hadjira, L, C., Badreddine A., Sabri, A., (2025). Socio-Demographic Determinants of Women’s Entrepreneurship: A Binary Logistic Regression Analysis<em>. Business Ethics and Leadership</em>. Vol. 9(2), 55-64. <a href="http://doi.org/10.61093/bel,9(2).55-64.2025"><u>http://doi.org/10.61093/bel,9(2).55-64.2025</u></a><u>.</u></p>
+<p>Hua, Y., Stead, S, T., George, A., Ganti, L (2025). Clinical Risk Prediction with Logistic Regression: Best Practices, Validation Techniques, and Applications in Medical Research. Academic Surgery and Medicine.online. https://doi.org/10.62186/001c.131964</p>
+<p>Liu, H., Li, R., Wang, L., Zhu, L., Zhu, X., Zho, Q., Yang, Z., Liu, H. (2025). Analyzing the correlation between acute ischemic stroke and triglyceride-glucose index based on ordered logistic regression. <em>Frontiers in Neurology</em>. Vol 16: 1500572. <a href="https://doi" class="uri">https://doi</a>: <u>10.3389/fneur.2025.1500572</u>.</p>
+<p>Shigematsu, K., Watanabe, Y., Nakano, H., and on behalf of the Kyoto&nbsp; Stroke Registry Committee. (2015). Influences of hyperlipidemia history on stroke outcome: a retrospective cohort study based in the Kyoto Stroke Registry. <em>BMC Neurology</em>.15- 44. <u>https://doi.10.1186/s 128883-015-0297-1.</u></p>
+<p>Tsangaratos, P., Illia, I. (2016). Comparison of a logistic regression and Naïve Bayes classifier in landslide susceptibility assessments: The influence of models complexity and training dataset size. <em>Catena</em>. Vol 145, 154-179. <a href="https://dx.doi.org/10.1016/j.catena.2016.06.004">https://dx.doi.org/10.1016/</a> <a href="https://dx.doi.org/10.1016/j.catena.2016.06.004">j.catena.2016.06.004</a>.</p>
+<p>Vural, A., Cumaoglu, O, M. (2025). Identifying Key Inflammatory Markers of Mortality in Acute Ischemic Stroke using Logistic Regression Analysis. <em>Eurasian Journal of Emergency Medicine</em>. of Vol 24(1), 50- 55.<a href="Http://doi" class="uri">Http://doi</a>:10.4274/eajem.galenos.2025.21957</p>
+<p>Yang, L., Chen, X., Cheng, H. Zhang, L. (2022). Dietary Copper Intake and the Risk of Stroke in Adults. A Case-Control Study Based on National Health and Nutrition Examination Survey 2013-2018. <em>Nutrients</em>. Vol 14(409). https://doiorg/10.3390/ nu.4030409.</p>
+<p>Zhang, Q., Chong, H., Liao, P., Wan, Y. (2020). Logistic Regression modeling of implementation of corporate safety policy in international infrastructures <em>Engineering, Construction, and Architectural Management</em>. Vol 27(10). 3031-3050. <a href="https://doi" class="uri">https://doi</a> 10.1108/ECAM-03-20190-0155.</p>
+<p>Zhang, Y., Xin, Y., Li, Q., Ma, J., Li, S., Lv, X,. Lv, W. (2017). Empirical study of seven data mining algorithms on different characteristics of datasets for biomedical classification applications<em>. BioMedical Engineering OnLine</em>. 16:125. <a href="https://doi" class="uri">https://doi</a>.10.1186 s12938-017-0416-x</p>
+<p>Zhou, Y., Song, L., Liu, Y., Vijayakumar, P., Gupta, B, B., Alhalabi, W., Alsharif, H. (2023).&nbsp;A privacy-preserving logistic regression-based diagnosis scheme for digital healthcare. <em>Future Generation Computer Systems,</em> Vol 144, 63-73. https://doi.org/10.1016/ j.future.2023.02.022.</p>
+</section>
+</section>
+<section id="introduction-objectives" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-objectives">Introduction &amp; Objectives</h2>
+<ul>
+<li>Background and study context</li>
+<li>Research question or hypothesis</li>
+<li>Study objectives</li>
+<li>Significance of the analysis</li>
+</ul>
+</section>
+<section id="data-methods" class="level2">
+<h2 class="anchored" data-anchor-id="data-methods">Data &amp; Methods</h2>
+<ul>
+<li>Sample size and data source</li>
+<li>Key variables and predictors</li>
+<li>Logistic regression approach</li>
+<li>Statistical validation methods</li>
+</ul>
+</section>
+<section id="results-findings" class="level2">
+<h2 class="anchored" data-anchor-id="results-findings">Results &amp; Findings</h2>
+<ul>
+<li>Significant predictors identified</li>
+<li>Model performance metrics (AUC, etc.)</li>
+<li>Key statistical findings</li>
+<li>Clinical or practical implications</li>
+</ul>
+</section>
+<section id="conclusions" class="level2">
+<h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
+<ul>
+<li>Summary of main findings</li>
+<li>Study limitations</li>
+<li>Recommendations for future research</li>
+<li>Clinical or policy implications</li>
+</ul>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
