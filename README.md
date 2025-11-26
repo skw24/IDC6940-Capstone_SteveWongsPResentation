@@ -23,6 +23,10 @@ Features: The Dataset has 12 variables:
           (2) Categorical Variables (Gender, Hypertension, Heart Disease, Marital Status, WorkType, Residentialtype, SmokingStatus, Outcome Variable (stroke or no  Stroke)
           (3) Continous Variables (Age, Average Glucose Level, BMI)
     
-Output: Please refer to the link to see the project output                           
+Output: Please refer to the link to see the project output: https://skw24.github.io/IDC6940-Capstone_SteveWongsPResentation/                 
 
-Usage
+Output Alternative: Go to Settings/Pages/ and see the link above and click it on
+
+Licenses: R Studio Server (licensed to the University of West Florida by Posit)
+          Github:
+     
