@@ -16,7 +16,7 @@ github.com/skw24/IDC6940-Capstone_SteveWongsPResentation
 
 Installation Instructions: (1) Copy the file index.html to your computer and open it in a web browser. 
 
-Running the Program: (1) open R studio or Rstudio server and download the program LR_ProjectFall2025SW.qmd. 
+Running the Program: (1) open R studio or Rstudio server and download the program LR_Project_Fall2025.qmd. 
 
                      (2) install the Kaggle Dataset by Soriano found in Kaggle.com.
                      
