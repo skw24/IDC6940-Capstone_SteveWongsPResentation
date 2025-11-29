@@ -14,17 +14,7 @@ File Types Used: R(Quarto)/Github (HTML output files from R). HTML output file r
 
 github.com/skw24/IDC6940-Capstone_SteveWongsPResentation
 
-Installation Instructions: (1) Copy the file index.html to your computer and open it in a web browser. 
-
-OR: If you want to run the program on your computer:
-
-Running the Program: (1) open R studio or Rstudio server and download the program Fall2025_LogisticRegressionProject_StevenWong.qmd. 
-
-                     (2) install the Kaggle Dataset by Soriano found in Kaggle.com.
-                     
-                     (3) Change the QMD file to reference the dataset on your comp[uter.
-                     
-                     (4) Run the file
+Running the Program: (1) Copy the file index.html to your computer and open it in a web browser. 
 
 Features: The Dataset has 12 variables:
           
