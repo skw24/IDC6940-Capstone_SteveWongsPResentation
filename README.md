@@ -8,7 +8,6 @@ It also looks at the rise and wide spread use of Logistic Regression across vari
 
 the reasons and limitations of Logistic Regression.
 
-
 Programs/Websites Used: R and Github
 
 File Types Used: R(Quarto)/Github (HTML output files from R). HTML output file renamed to index.html and uploaded to Github repo: 
