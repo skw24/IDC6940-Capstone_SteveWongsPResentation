@@ -1,8 +1,6 @@
 Project Title: Stroke Analyisis: Study by Logistic Regression
 
-Desccription: This study looks at how logistic regression analyzes an example dataset in Kaggle. It aims to confirm Logistic Regression as a valid 
-
-algorithm in studying strokes. 
+Desccription: This study looks at how logistic regression analyzes an example dataset in Kaggle. It aims to confirm Logistic Regression as a valid algorithm in studying strokes. 
 
 It also looks at the rise and wide spread use of Logistic Regression across varied subjects especially in healthcare and briefly explores
 
