@@ -1,4 +1,4 @@
-Project Title: Finding the Parameters of Logistic Regression in Healthcare Using Stroke Prediction
+Project Title: A First Step in Understanding Logistic Regression Applications in Rare Events
 
 Desccription: This study looks at how logistic regression analyzes an example dataset in Kaggle. It aims to confirm Logistic Regression as a valid algorithm in studying strokes. 
 
